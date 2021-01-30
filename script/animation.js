@@ -54,6 +54,10 @@ const startImgAnimation = () => {
     })
     tl.fromTo(guy2, { scale: 0 }, { scale: 1, autoAlpha: 1})
         .fromTo(subFrame1, { y: `-=${baseY}` }, { autoAlpha: 1, y: `+=${baseY }`, ease: 'elastic', duration: 1})
+        .to(guy4, { autoAlpha: 1, ease: 'ease', duration: 1})
+        .fromTo(guy1, { y: `+=${baseY}` }, { y: `-=${baseY}`, autoAlpha: 1 })
+        .fromTo(guy3, { y: `-=${baseY}` }, { y: `+=${baseY}`, autoAlpha: 1 })
+        .fromTo(subFrame2, { y: `-=${baseY}` }, { autoAlpha: 1, y: `+=${baseY }`, ease: 'elastic', duration: 1})
         
 }
 
