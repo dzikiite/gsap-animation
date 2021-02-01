@@ -1,5 +1,5 @@
 const button = document.querySelector('button');
-const svg = document.querySelector('svg');
+const svg1 = document.querySelector('#svg1');
 const frame = document.querySelector('#frame');
 const block1 = document.querySelector('#block-1');
 const text2 = document.querySelector('#text-2');
@@ -13,6 +13,8 @@ const guy1 = document.querySelector('#guy-1');
 const guy2 = document.querySelector('#guy-2');
 const guy3 = document.querySelector('#guy-3');
 const guy4 = document.querySelector('#guy-4');
+const svg2 = document.querySelector('#svg2');
+const boxContainer = document.querySelector('.box-container');
 const rule = CSSRulePlugin.getRule('button:after');
 
 const tl = gsap.timeline();
@@ -27,8 +29,10 @@ const buttonHoverAnimation = () => {
 const startImgAnimation = () => {
     const baseY = 300;
     const baseX = 100;
+    const boxElements = boxContainer.children;
 
-    gsap.set([frame, 
+    gsap.set([
+        frame, 
         block1, 
         block2, 
         block3, 
@@ -45,7 +49,7 @@ const startImgAnimation = () => {
     const tl = gsap.timeline({ defaults: { ease: Back.easeOut.config(2) } });
     
     tl.to(button, { opacity: 0, display: 'none', ease: 'ease'});
-    tl.to(svg, { display: 'block' });
+    tl.to(svg1, { display: 'block' });
     [frame, block1, block2, block3].forEach(element => {
         tl.fromTo(element, { y: `+=${baseY}` }, { autoAlpha: 1, y: `-=${baseY}`});
     });
@@ -58,6 +62,24 @@ const startImgAnimation = () => {
         .fromTo(guy1, { y: `+=${baseY}` }, { y: `-=${baseY}`, autoAlpha: 1 })
         .fromTo(guy3, { y: `-=${baseY}` }, { y: `+=${baseY}`, autoAlpha: 1 })
         .fromTo(subFrame2, { y: `-=${baseY}` }, { autoAlpha: 1, y: `+=${baseY }`, ease: 'elastic', duration: 1})
+        .to(svg1, { opacity: 0, ease: 'ease', duration: .3 })
+        .to(svg1, { display: 'none', duration: .1 });
+
+    gsap.set([...boxElements], { transformOrigin: 'left' });
+
+    const tl2 = gsap.timeline({ defaults: { ease: 'power2.inOut' }});
+    tl2.delay(tl.endTime() - 1);
+    
+    tl2.to(boxContainer, { visibility: 'inherit' });
+    [...boxElements].forEach(element => {
+        tl2.fromTo(element, { scaleX: 0 }, { scaleX: 1, backgroundColor: '#f2f2f2', duration: .2 })
+    });
+    tl2.to(document.body, { backgroundColor: '#11121B' })
+        .to([...boxElements], { backgroundColor: '#1A1C29'})
+        .to([...boxElements], { scaleX: .5, transformOrigin: 'center' })
+        .to(boxContainer, { skewX: '-20deg -20deg' })
+        .to(boxContainer, { scale: 0, y: `-=500`, x: `+=1000`, duration: 1.2 });
+    
         
 }
 
